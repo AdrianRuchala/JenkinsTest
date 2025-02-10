@@ -5,19 +5,24 @@ pipeline {
         stage('Checkout') {
                     steps {
                         checkout([$class: 'GitSCM',
-                                  branches: [[name: '*/main']],  // Or your branch specifier
+                                  branches: [[name: '*/main']],
                                   extensions: [],
-                                  userRemoteConfigs: [[credentialsId: 'github-credentials',  // Your credential ID
+                                  userRemoteConfigs: [[credentialsId: 'github-credentials',
                                                        url: 'https://github.com/AdrianRuchala/JenkinsTest.git']]])
                     }
                 }
 
         stage('Build') {
-            steps {
-                sh 'chmod +x ./gradlew'
-                sh './gradlew build'
-            }
-        }
+                    agent {
+                        docker {
+                            image 'your-android-image-name'
+                            label 'android-agent'
+                        }
+                    }
+                    steps {
+                        sh './gradlew build'
+                    }
+                }
 
         stage('Test') {
             steps {
