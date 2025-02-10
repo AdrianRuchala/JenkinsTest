@@ -13,16 +13,11 @@ pipeline {
                 }
 
         stage('Build') {
-                    agent {
-                        docker {
-                            image 'your-android-image-name'
-                            label 'android-agent'
-                        }
-                    }
-                    steps {
-                        sh './gradlew build'
-                    }
-                }
+            steps {
+                sh 'chmod +x ./gradlew'
+                sh './gradlew build'
+            }
+        }
 
         stage('Test') {
             steps {
