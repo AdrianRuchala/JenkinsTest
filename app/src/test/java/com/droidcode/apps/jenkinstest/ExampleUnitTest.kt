@@ -1,7 +1,6 @@
 package com.droidcode.apps.jenkinstest
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**
